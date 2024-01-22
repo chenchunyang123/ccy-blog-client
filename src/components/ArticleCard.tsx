@@ -5,6 +5,7 @@ interface IArticleCardProps {
   content: string;
 }
 
+
 const ArticleCard = (props: IArticleCardProps) => {
   const { title, content } = props;
   return (
