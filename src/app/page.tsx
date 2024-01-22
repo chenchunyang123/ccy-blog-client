@@ -4,17 +4,17 @@ import ArticleCard from "@/components/ArticleCard";
 const list = [
   {
     id: 23,
-    title: "123123",
+    title: "网络安全方向：10分钟2700w请求的攻击我是如何处理的",
     content: "sfasdfs",
   },
   {
     id: 23,
-    title: "123123",
+    title: "网络安全方向：10分钟2700w请求的攻击我是如何处理的",
     content: "sfasdfs",
   },
   {
     id: 23,
-    title: "123123",
+    title: "网络安全方向：10分钟2700w请求的攻击我是如何处理的",
     content: "sfasdfs",
   },
 ];
