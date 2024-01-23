@@ -1,6 +1,6 @@
 const Header = () => {
   return (
-    <header className="h-[60px] w-full">
+    <header className="h-16 w-full">
       <nav className="w-full h-full relative bg-emerald-100">
         <div className="inner">
           <div>left</div>
