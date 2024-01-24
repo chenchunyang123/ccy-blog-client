@@ -8,34 +8,59 @@ interface IPaginationProps {
 }
 
 const BOX_CLASSES =
-  'w-10 h-10 flex justify-center items-center border border-[#e3e8f7] cursor-pointer rounded-lg bg-white shadow-[0_8px_16px_-4px_rgba(44,45,48,0.047)] duration-300 hover:border-main hover:text-main bg-red';
+  'w-10 h-10 flex justify-center items-center border border-border cursor-pointer rounded-lg shadow-[0_8px_16px_-4px_rgba(44,45,48,0.047)]';
 
 const Pagination = (props: IPaginationProps) => {
   const { pageNum, pageSize, total } = props;
 
-  console.log('pageNum :>> ', pageNum);
+  // 计算有多少页
+  const totalPage = Math.ceil(total / pageSize);
 
-  const PageItem = ({ num }: { num: number }) => (
-    <Link
-      className={cls(BOX_CLASSES, {
-        'bg-main': num === pageNum,
-      })}
-      href={`/page/${num}`}
-    >
-      {num}
-    </Link>
-  );
+  const PageItem = ({ num }: { num: number }) => {
+    const isActive = num === pageNum;
+
+    return (
+      <Link
+        className={cls(BOX_CLASSES, {
+          'bg-main text-white': isActive,
+          'bg-white hover:border-main hover:text-main': !isActive,
+        })}
+        href={`/page/${num}`}
+      >
+        {num}
+      </Link>
+    );
+  };
 
   return (
     <nav className="w-full mt-6 flex items-center justify-between">
       <div className="flex items-center justify-center grow gap-2">
         <PageItem num={1} />
-        <PageItem num={2} />
-        <div>...</div>
-        <PageItem num={3} />
-        <div className={BOX_CLASSES}>&gt;&gt;</div>
+        {totalPage > 1 && <PageItem num={2} />}
+        {totalPage === 3 && <PageItem num={3} />}
+        {totalPage > 3 && (
+          <>
+            <div>...</div>
+            <PageItem num={totalPage} />
+            <div
+              className={cls(
+                BOX_CLASSES,
+                'bg-white hover:border-main hover:text-main',
+              )}
+            >
+              &gt;&gt;
+            </div>
+          </>
+        )}
       </div>
-      <div className={BOX_CLASSES}>&gt;</div>
+      <div
+        className={cls(
+          BOX_CLASSES,
+          'bg-white hover:border-main hover:text-main',
+        )}
+      >
+        &gt;
+      </div>
     </nav>
   );
 };

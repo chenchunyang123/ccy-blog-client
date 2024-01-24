@@ -2,6 +2,7 @@ import { usePathname } from 'next/navigation';
 
 import ArticleCard from '@/components/ArticleCard';
 import Pagination from '@/components/Pagination';
+import AuthorCard from '@/components/AuthorCard';
 
 const list = [
   {
@@ -27,7 +28,6 @@ interface IHomeProps {
 
 export default function Home(props: IHomeProps) {
   const { pageNum = 1 } = props;
-  console.log('pageNum :>> ', pageNum);
   return (
     <div className="mt-6">
       <div className="inner">
@@ -47,10 +47,12 @@ export default function Home(props: IHomeProps) {
               })}
             </div>
             {/* 分页器 */}
-            <Pagination pageNum={pageNum} pageSize={10} total={30} />
+            <Pagination pageNum={pageNum} pageSize={10} total={34} />
           </div>
           {/* 右侧导航栏 */}
-          <div className="w-290px]">234</div>
+          <div className="w-[290px]">
+            <AuthorCard />
+          </div>
         </div>
       </div>
     </div>
