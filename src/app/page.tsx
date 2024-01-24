@@ -1,8 +1,11 @@
 import { usePathname } from 'next/navigation';
 
 import ArticleCard from '@/components/ArticleCard';
-import Pagination from '@/components/Pagination';
 import AuthorCard from '@/components/AuthorCard';
+import MonthType from '@/components/MonthType';
+import Pagination from '@/components/Pagination';
+import TagCloud from '@/components/TagCloud';
+import SiteData from '@/components/SiteData';
 
 const list = [
   {
@@ -25,6 +28,8 @@ const list = [
 interface IHomeProps {
   pageNum?: number;
 }
+
+const DIVIDER_CLASSES = 'my-4 border-t border-dashed border-border';
 
 export default function Home(props: IHomeProps) {
   const { pageNum = 1 } = props;
@@ -52,6 +57,16 @@ export default function Home(props: IHomeProps) {
           {/* 右侧导航栏 */}
           <div className="w-[290px]">
             <AuthorCard />
+            <div className="bg-white p-6 border border-border rounded-xl mt-6">
+              {/* 标签云 */}
+              <TagCloud />
+              <div className={DIVIDER_CLASSES} />
+              {/* 月份分类 */}
+              <MonthType />
+              <div className={DIVIDER_CLASSES} />
+              {/* 全站数据 */}
+              <SiteData />
+            </div>
           </div>
         </div>
       </div>

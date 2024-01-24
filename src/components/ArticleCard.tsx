@@ -14,8 +14,7 @@ const ArticleCard = (props: IArticleCardProps) => {
           // 图片放大
           className="transform duration-700 group-hover:scale-[1.03] group-hover:brightness-[0.82]"
           fill
-          // src="https://exp-picture.cdn.bcebos.com/b7b28f87031c99c0820d1d31af2fa872951fed48.jpg?x-bce-process=image%2Fcrop%2Cx_0%2Cy_0%2Cw_640%2Ch_360%2Fformat%2Cf_auto%2Fquality%2Cq_80"
-          src=""
+          src="https://exp-picture.cdn.bcebos.com/b7b28f87031c99c0820d1d31af2fa872951fed48.jpg?x-bce-process=image%2Fcrop%2Cx_0%2Cy_0%2Cw_640%2Ch_360%2Fformat%2Cf_auto%2Fquality%2Cq_80"
           alt={title}
         />
       </div>

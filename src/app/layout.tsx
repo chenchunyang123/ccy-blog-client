@@ -1,9 +1,13 @@
+import dayjs from 'dayjs';
 import type { Metadata } from 'next';
 
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 
 import './globals.css';
+
+const customParseFormat = require('dayjs/plugin/customParseFormat');
+dayjs.extend(customParseFormat);
 
 export const metadata: Metadata = {
   title: '一条放了盐的鱼',
@@ -18,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="zh-cn">
       <body>
-        {/* <Header /> */}
+        <Header />
         <main>{children}</main>
         <Footer />
       </body>
