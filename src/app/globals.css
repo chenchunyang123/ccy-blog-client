@@ -3,8 +3,13 @@
 @tailwind utilities;
 
 @layer utilities {
+  /* 版心 */
   .inner {
     @apply max-w-[1400px] mx-auto;
+  }
+  /* 内容卡片通用样式 */
+  .card-common {
+    @apply bg-white border border-border rounded-xl shadow-card-shadow overflow-hidden;
   }
 }
 

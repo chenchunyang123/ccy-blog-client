@@ -8,7 +8,7 @@ interface IPaginationProps {
 }
 
 const BOX_CLASSES =
-  'w-10 h-10 flex justify-center items-center border border-border cursor-pointer rounded-lg shadow-[0_8px_16px_-4px_rgba(44,45,48,0.047)]';
+  'w-10 h-10 flex justify-center items-center border border-border cursor-pointer rounded-lg shadow-card-shadow';
 
 const Pagination = (props: IPaginationProps) => {
   const { pageNum, pageSize, total } = props;

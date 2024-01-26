@@ -8,7 +8,7 @@ interface IArticleCardProps {
 const ArticleCard = (props: IArticleCardProps) => {
   const { title, content } = props;
   return (
-    <div className="cursor-pointer bg-white rounded-xl overflow-hidden border border-border shadow-[0_8px_16px_-4px_rgba(44,45,48,0.047)] hover:border-main group">
+    <div className="cursor-pointer card-common hover:border-main group">
       <div className="relative h-56 overflow-hidden">
         <Image
           // 图片放大

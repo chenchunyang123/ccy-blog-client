@@ -26,7 +26,7 @@ const LINK_CONFIG = [
   },
 ];
 
-const RENDER_NAV_BG_DISTANCE = 20;
+const RENDER_NAV_BG_DISTANCE = 0;
 
 const Header = () => {
   const pathname = usePathname();
@@ -64,7 +64,7 @@ const Header = () => {
                   href={item.href}
                   className={cls(LINK_CLASSES, {
                     'bg-main text-white': active,
-                    'bg-white hover:bg-main hover:text-white': !active,
+                    'hover:bg-main hover:text-white': !active,
                   })}
                   key={index}
                 >
