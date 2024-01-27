@@ -1,3 +1,6 @@
+import ArticleNav from '@/components/ArticleNav';
+import AuthorCard from '@/components/AuthorCard';
+
 interface IArticleProps {
   params: {
     id: string;
@@ -13,8 +16,6 @@ const article = (props: IArticleProps) => {
   const {
     params: { id },
   } = props;
-
-  console.log('id', id);
 
   return (
     <div>
@@ -61,15 +62,18 @@ const article = (props: IArticleProps) => {
       </div>
       {/* 文章主体区域 */}
       <div className="mt-6">
-        <div className="inner flex items-center gap-2">
-          <div className="card-common p-6">
+        <div className="inner flex gap-4">
+          <div className="card-common p-6 flex-grow">
             {/* 文章内容 */}
             <div></div>
             {/* 评论 */}
             <div></div>
           </div>
           {/* 侧边栏 */}
-          <div></div>
+          <div className="w-[290px]">
+            <AuthorCard />
+            <ArticleNav />
+          </div>
         </div>
       </div>
     </div>

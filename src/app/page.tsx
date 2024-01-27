@@ -45,6 +45,7 @@ export default function Home(props: IHomeProps) {
                 return (
                   <ArticleCard
                     key={item.id}
+                    id={item.id}
                     title={item.title}
                     content={item.content}
                   />

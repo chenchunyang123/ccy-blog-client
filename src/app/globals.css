@@ -9,12 +9,13 @@
   }
   /* 内容卡片通用样式 */
   .card-common {
-    @apply bg-white border border-border rounded-xl shadow-card-shadow overflow-hidden;
+    @apply bg-white border border-border rounded-xl shadow-[0_8px_16px_-4px_rgba(44,45,48,0.047)] overflow-hidden;
   }
 }
 
 body {
   background-color: #f7f9fe;
+  color: #4c4948;
 }
 
 * {

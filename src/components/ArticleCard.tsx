@@ -1,14 +1,19 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface IArticleCardProps {
+  id: number;
   title: string;
   content: string;
 }
 
 const ArticleCard = (props: IArticleCardProps) => {
-  const { title, content } = props;
+  const { id, title, content } = props;
   return (
-    <div className="cursor-pointer card-common hover:border-main group">
+    <Link
+      className="cursor-pointer card-common hover:border-main group"
+      href={`/article/${id}`}
+    >
       <div className="relative h-56 overflow-hidden">
         <Image
           // 图片放大
@@ -20,9 +25,7 @@ const ArticleCard = (props: IArticleCardProps) => {
       </div>
       <div className="h-44 p-6 flex flex-col">
         <div className="text-xs text-gray-400 mb-3">分类</div>
-        <div className="text-xl font-bold group-hover:text-main">
-          {title}
-        </div>
+        <div className="text-xl font-bold group-hover:text-main">{title}</div>
         <div className="flex justify-between items-end text-sm grow">
           <div className="flex items-center gap-2">
             <div># 网络安全</div>
@@ -31,7 +34,7 @@ const ArticleCard = (props: IArticleCardProps) => {
           <div>2023-2-2</div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
