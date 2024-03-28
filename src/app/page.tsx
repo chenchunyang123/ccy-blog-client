@@ -1,11 +1,15 @@
+'use client';
+
 import { usePathname } from 'next/navigation';
+import useSWR from 'swr';
 
 import ArticleCard from '@/components/ArticleCard';
 import AuthorCard from '@/components/AuthorCard';
 import MonthType from '@/components/MonthType';
 import Pagination from '@/components/Pagination';
-import TagCloud from '@/components/TagCloud';
 import SiteData from '@/components/SiteData';
+import TagCloud from '@/components/TagCloud';
+import { axios } from '@/service';
 
 const list = [
   {
@@ -33,15 +37,26 @@ const DIVIDER_CLASSES = 'my-4 border-t border-dashed border-border';
 
 export default function Home(props: IHomeProps) {
   const { pageNum = 1 } = props;
+
+  const {
+    data: data_articleList = [],
+    error,
+    isLoading,
+  } = useSWR(`/article?page_num=${pageNum}&page_size=${8}`, (url) => {
+    return axios.get(url).then((res) => res.data?.list);
+  });
+
+  console.log('data_articleList', data_articleList);
+
   return (
     <div className="mt-6">
       <div className="inner">
         {/* 文章及右侧导航栏 */}
         <div className="w-full flex gap-6">
           {/* 文章区块 */}
-          <div>
+          <div className="grow">
             <div className="grow grid grid-cols-2 gap-6">
-              {list.map((item) => {
+              {data_articleList.map((item: any) => {
                 return (
                   <ArticleCard
                     key={item.id}
