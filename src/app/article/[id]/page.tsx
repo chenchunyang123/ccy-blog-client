@@ -1,5 +1,13 @@
+'use client';
+
+import dayjs from 'dayjs';
+import { MdPreview } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+import useSWR from 'swr';
+
 import ArticleNav from '@/components/ArticleNav';
 import AuthorCard from '@/components/AuthorCard';
+import { axios } from '@/service';
 
 interface IArticleProps {
   params: {
@@ -10,12 +18,26 @@ interface IArticleProps {
 const BOX_CLASSES =
   'px-2 py-1 text-sm text-white font-bold bg-white/[0.2] rounded-lg';
 
-const taglist = ['前端', '开发', 'css3'];
-
-const article = (props: IArticleProps) => {
+const Article = (props: IArticleProps) => {
   const {
     params: { id },
   } = props;
+
+  const { data: data_article = {} } = useSWR(`/article/${id}`, (url) => {
+    return axios.get(url).then((res) => res.data);
+  });
+
+  console.log('data_article', data_article);
+  const {
+    category,
+    tags,
+    title,
+    content,
+    created_at,
+    updated_at,
+    word_count,
+    reading_duration_minutes,
+  } = data_article;
 
   return (
     <div>
@@ -28,34 +50,37 @@ const article = (props: IArticleProps) => {
               {/* 是否原创 */}
               <span className={BOX_CLASSES}>原创</span>
               {/* 分类 */}
-              <span className={BOX_CLASSES}>前端开发</span>
+              <span className={BOX_CLASSES}>{category?.name}</span>
             </div>
             {/* 标签 */}
             <div className="flex items-center gap-2">
-              {taglist.map((item, index) => {
+              {tags?.map((item: any) => {
                 return (
-                  <span key={index} className="opacity-80 text-white text-sm">
-                    # {item}
+                  <span key={item.id} className="opacity-80 text-white text-sm">
+                    # {item.name}
                   </span>
                 );
               })}
             </div>
           </div>
           {/* 主标题 */}
-          <h1 className="text-white font-bold text-5xl my-6">
-            那些年用过的CSS奇妙用法之能用CSS就不用JS技巧系列
-          </h1>
+          <h1 className="text-white font-bold text-5xl my-6">{title}</h1>
           {/* 文章属性 */}
           <div className="text-white">
             <div className="flex items-center gap-2 mb-2">
-              <span>发表于 2023-8-27</span>
-              <span>更新于 2023-9-9</span>
+              <span>发表于 {dayjs(created_at).format('YYYY-MM-DD')}</span>
+              <span>更新于 {dayjs(updated_at).format('YYYY-MM-DD')}</span>
             </div>
             <div className="flex items-center gap-2">
-              <span>字数总计: 2.8k</span>
-              <span>阅读时长: 11分钟</span>
-              <span>阅读量: 2734</span>
-              <span>评论数: 13</span>
+              <span>
+                字数总计:{' '}
+                {word_count > 1000
+                  ? `${(word_count / 1000).toFixed(1)}k`
+                  : word_count}
+              </span>
+              <span>阅读时长: {reading_duration_minutes}分钟</span>
+              <span>阅读量: xx</span>
+              <span>评论数: xx</span>
             </div>
           </div>
         </div>
@@ -65,14 +90,16 @@ const article = (props: IArticleProps) => {
         <div className="inner flex gap-4">
           <div className="card-common p-6 flex-grow">
             {/* 文章内容 */}
-            <div></div>
+            <div>
+              <MdPreview modelValue={content} />
+            </div>
             {/* 评论 */}
             <div></div>
           </div>
           {/* 侧边栏 */}
           <div className="w-[290px]">
             <AuthorCard />
-            <ArticleNav />
+            {/* <ArticleNav /> */}
           </div>
         </div>
       </div>
@@ -80,4 +107,4 @@ const article = (props: IArticleProps) => {
   );
 };
 
-export default article;
+export default Article;

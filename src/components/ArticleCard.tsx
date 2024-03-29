@@ -1,14 +1,17 @@
+import dayjs from 'dayjs';
 import Image from 'next/image';
 import Link from 'next/link';
 
 interface IArticleCardProps {
   id: number;
   title: string;
-  content: string;
+  category?: Record<string, any>;
+  tags?: Record<string, any>[];
+  createdDate: string;
 }
 
 const ArticleCard = (props: IArticleCardProps) => {
-  const { id, title, content } = props;
+  const { id, title, category, tags, createdDate } = props;
   return (
     <Link
       className="cursor-pointer card-common hover:border-main group"
@@ -24,14 +27,17 @@ const ArticleCard = (props: IArticleCardProps) => {
         />
       </div>
       <div className="h-44 p-6 flex flex-col">
-        <div className="text-xs text-gray-400 mb-3">分类</div>
+        <div className="text-xs text-gray-400 mb-3">
+          {category?.name || '未分类'}
+        </div>
         <div className="text-xl font-bold group-hover:text-main">{title}</div>
         <div className="flex justify-between items-end text-sm grow">
           <div className="flex items-center gap-2">
-            <div># 网络安全</div>
-            <div># 绘图</div>
+            {tags?.map((tag) => {
+              return <div key={tag.id}># {tag.name}</div>;
+            })}
           </div>
-          <div>2023-2-2</div>
+          <div>{dayjs(createdDate).format('YYYY-MM-DD')}</div>
         </div>
       </div>
     </Link>

@@ -11,42 +11,28 @@ import SiteData from '@/components/SiteData';
 import TagCloud from '@/components/TagCloud';
 import { axios } from '@/service';
 
-const list = [
-  {
-    id: 23,
-    title: '网络安全方向：10分钟2700w请求的攻击我是如何处理的',
-    content: 'sfasdfs',
-  },
-  {
-    id: 23,
-    title: '网络安全方向：10分钟2700w请求的攻击我是如何处理的',
-    content: 'sfasdfs',
-  },
-  {
-    id: 23,
-    title: '网络安全方向：10分钟2700w请求的攻击我是如何处理的',
-    content: 'sfasdfs',
-  },
-];
-
 interface IHomeProps {
   pageNum?: number;
 }
 
 const DIVIDER_CLASSES = 'my-4 border-t border-dashed border-border';
 
+const PAGE_SIZE = 8;
+
 export default function Home(props: IHomeProps) {
   const { pageNum = 1 } = props;
 
   const {
-    data: data_articleList = [],
-    error,
-    isLoading,
-  } = useSWR(`/article?page_num=${pageNum}&page_size=${8}`, (url) => {
-    return axios.get(url).then((res) => res.data?.list);
+    data: data_article = {},
+  } = useSWR(`/article?page_num=${pageNum}&page_size=${PAGE_SIZE}`, (url) => {
+    return axios.get(url).then((res) => res.data);
   });
 
-  console.log('data_articleList', data_articleList);
+  const {
+    data: data_tag = [],
+  } = useSWR(`/tag`, (url) => {
+    return axios.get(url).then((res) => res.data?.list);
+  });
 
   return (
     <div className="mt-6">
@@ -56,26 +42,32 @@ export default function Home(props: IHomeProps) {
           {/* 文章区块 */}
           <div className="grow">
             <div className="grow grid grid-cols-2 gap-6">
-              {data_articleList.map((item: any) => {
+              {data_article?.list?.map((item: any) => {
                 return (
                   <ArticleCard
                     key={item.id}
                     id={item.id}
                     title={item.title}
-                    content={item.content}
+                    category={item.category}
+                    tags={item.tags}
+                    createdDate={item.created_at}
                   />
                 );
               })}
             </div>
             {/* 分页器 */}
-            <Pagination pageNum={pageNum} pageSize={10} total={34} />
+            <Pagination
+              pageNum={pageNum}
+              pageSize={PAGE_SIZE}
+              total={data_article?.total}
+            />
           </div>
           {/* 右侧导航栏 */}
           <div className="w-[290px]">
             <AuthorCard />
             <div className="bg-white p-6 border border-border rounded-xl mt-6">
               {/* 标签云 */}
-              <TagCloud />
+              <TagCloud tags={data_tag} />
               <div className={DIVIDER_CLASSES} />
               {/* 月份分类 */}
               <MonthType />
