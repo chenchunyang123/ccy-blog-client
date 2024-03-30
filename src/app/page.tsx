@@ -22,15 +22,22 @@ const PAGE_SIZE = 8;
 export default function Home(props: IHomeProps) {
   const { pageNum = 1 } = props;
 
-  const {
-    data: data_article = {},
-  } = useSWR(`/article?page_num=${pageNum}&page_size=${PAGE_SIZE}`, (url) => {
+  const { data: data_articleByMonth = [] } = useSWR(`/article/by_month`, (url) => {
     return axios.get(url).then((res) => res.data);
   });
 
-  const {
-    data: data_tag = [],
-  } = useSWR(`/tag`, (url) => {
+  const { data: data_site = {} } = useSWR(`/site`, (url) => {
+    return axios.get(url).then((res) => res.data);
+  });
+
+  const { data: data_article = {} } = useSWR(
+    `/article?page_num=${pageNum}&page_size=${PAGE_SIZE}`,
+    (url) => {
+      return axios.get(url).then((res) => res.data);
+    },
+  );
+
+  const { data: data_tag = [] } = useSWR(`/tag`, (url) => {
     return axios.get(url).then((res) => res.data?.list);
   });
 
@@ -70,10 +77,10 @@ export default function Home(props: IHomeProps) {
               <TagCloud tags={data_tag} />
               <div className={DIVIDER_CLASSES} />
               {/* 月份分类 */}
-              <MonthType />
+              <MonthType data={data_articleByMonth} />
               <div className={DIVIDER_CLASSES} />
               {/* 全站数据 */}
-              <SiteData />
+              <SiteData data={data_site} />
             </div>
           </div>
         </div>

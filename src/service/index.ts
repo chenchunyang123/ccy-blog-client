@@ -13,7 +13,6 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
   (response) => {
-    console.log('response', response);
     if (response.status === 200 && response.data) {
       return response.data;
     }

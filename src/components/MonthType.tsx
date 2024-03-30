@@ -1,33 +1,5 @@
-const mockList = [
-  {
-    year: 2023,
-    month: 1,
-    count: 4,
-  },
-  {
-    year: 2021,
-    month: 3,
-    count: 12,
-  },
-  {
-    year: 2021,
-    month: 3,
-    count: 12,
-  },
-  {
-    year: 2021,
-    month: 3,
-    count: 12,
-  },
-  {
-    year: 2021,
-    month: 3,
-    count: 12,
-  },
-];
-
-function formatMonthCardDate(year: number, month: number) {
-  const monthMap = {
+function formatMonthCardDate(year_month: string) {
+  const monthMap: any = {
     1: '一',
     2: '二',
     3: '三',
@@ -40,25 +12,23 @@ function formatMonthCardDate(year: number, month: number) {
     10: '十',
     11: '十一',
     12: '十二',
-  } as any;
-
+  };
+  const [year, month] = year_month.split('-');
   return `${monthMap[month]}月 ${year}`;
 }
 
-const MonthType = () => {
-  const MonthCard = ({
-    values,
-  }: {
-    values: {
-      year: number;
-      month: number;
-      count: number;
-    };
-  }) => {
+interface IMonthTypeProps {
+  data: Record<string, any>;
+}
+
+const MonthType = (props: IMonthTypeProps) => {
+  const { data = [] } = props;
+  const MonthCard = ({ values = {} }: any) => {
+    const { year_month } = values;
     return (
       <div className="px-3 py-2 border border-border cursor-pointer rounded-lg flex flex-col justify-between gap-1 hover:bg-main group">
         <span className="text-sm text-gray-400">
-          {formatMonthCardDate(values.year, values.month)}
+          {formatMonthCardDate(year_month)}
         </span>
         <div className="group-hover:text-white">
           <span className="font-bold duration-0">{values.count}</span> 篇
@@ -69,7 +39,7 @@ const MonthType = () => {
 
   return (
     <div className="grid grid-cols-2 gap-2">
-      {mockList.map((item, idx) => {
+      {data.map((item: any, idx: number) => {
         return <MonthCard values={item} key={idx} />;
       })}
     </div>
