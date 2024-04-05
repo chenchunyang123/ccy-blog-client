@@ -1,6 +1,5 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
 import useSWR from 'swr';
 
 import ArticleCard from '@/components/ArticleCard';
