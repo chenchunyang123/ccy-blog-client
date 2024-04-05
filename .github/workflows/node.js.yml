@@ -18,14 +18,13 @@ jobs:
           port: ${{ secrets.DEPLOY_PORT }}
           username: ${{ secrets.DEPLOY_USER }}
           password: ${{ secrets.DEPLOY_SECRET }}
-          key: ${{ secrets.DEPLOY_KEY }}
           script: |
             cd ${{ secrets.DEPLOY_DIR }}
-            rm -rf blog
             git clone git@github.com:chenchunyang123/ccy-blog-client.git
+            pm2 delete blog || true
+            rm -rf blog || true
             mv ccy-blog-client blog
             cd blog
             npm install
             npm run build
-            pm2 delete blog || true
             npm run start:pm2
