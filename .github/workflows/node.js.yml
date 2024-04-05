@@ -2,21 +2,28 @@ name: 发布到云服务器
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ['main']
   pull_request:
-    branches: [ "main" ]
+    branches: ['main']
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - name: executing remote ssh commands to develop
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.DEPLOY_HOST }}
-        username: ${{ secrets.DEPLOY_USER }}
-        key: ${{ secrets.DEPLOY_SECRET }}
-        script: cd ${{ secrets.DEPLOY_DIR }} && rm-rf blog && git clone git@github.com:chenchunyang123/ccy-blog-client.git && mv ccy-blog-client blog && cd blog && npm install && npm run build && npm run start:pm2
-
+      - name: executing remote ssh commands to develop
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SECRET }}
+          script: |
+            cd ${{ secrets.DEPLOY_DIR }}
+            rm -rf blog
+            git clone git@github.com:chenchunyang123/ccy-blog-client.git
+            mv ccy-blog-client blog
+            cd blog
+            npm install
+            npm run build
+            pm2 delete blog || true
+            npm run start:pm2
