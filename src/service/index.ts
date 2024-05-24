@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:3001/api';
+axios.defaults.baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
 axios.interceptors.request.use(
   (config) => {
