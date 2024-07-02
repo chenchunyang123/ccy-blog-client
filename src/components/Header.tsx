@@ -17,10 +17,6 @@ const LINK_CONFIG = [
     href: '/photo',
   },
   {
-    label: '友链',
-    href: '/friend',
-  },
-  {
     label: '关于',
     href: '/about',
   },

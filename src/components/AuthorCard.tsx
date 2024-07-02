@@ -1,6 +1,14 @@
+import { axios } from '@/service';
 import Image from 'next/image';
+import useSWR from 'swr';
 
 const AuthorCard = () => {
+  const { data = {} } = useSWR(`/site/setting`, (url) => {
+    return axios.get(url).then((res) => res.data);
+  });
+
+  console.log('data :>> ', data);
+
   return (
     <div
       className="w-full p-4 rounded-xl flex flex-col"
